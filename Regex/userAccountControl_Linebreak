@@ -1,0 +1,5 @@
+| rex field=userAccountControl mode=sed "s/([\r\n]+)/#LINEBREAK##/g"
+| makemv userAccountControl delim="#LINEBREAK##"
+
+| stats count values(Username) by userAccountControl
+| mvexpand userAccountControl
