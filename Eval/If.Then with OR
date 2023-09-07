@@ -1,0 +1,3 @@
+```Ticket ownership is defined if the user is in Position of Doctor1,Doctor2 or has a field of phys equal to "true".. if that is the case the Doctor Team owns the ticket, if not the IAM team owns the ticket```
+
+| eval Ownership = if(in(Position,"Doctor1","Doctor2",) OR (phys = true), "Doctor Team" , "IAM Team")
