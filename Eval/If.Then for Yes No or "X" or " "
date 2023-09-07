@@ -1,0 +1,5 @@
+```if the account's firstName matches the FirstName then they are matching, if not they are not matching```
+
+| eval FirstNameMatch? = if(FirstName = firstName, "YES" , "NO")
+| eval LastNameMatch? = if(LastName = lastName, "X" , " ")
+| eval CredentialMatch? = if(Credential = title, "X", " ")
