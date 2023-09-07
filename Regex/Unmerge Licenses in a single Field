@@ -1,0 +1,2 @@
+| rex field=Azure_Assigned_Products max_match=0 "(?<Azure_Assigned_Products>[^\+]+)"
+| mvexpand Azure_Assigned_Products
