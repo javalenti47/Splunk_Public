@@ -1,0 +1,4 @@
+Ex: Application_A has all usernames like JSMITH while Application_B has usernames like jsmith - this eval helps join both types together
+
+| eval username=lower(username)
+| eval username=upper(username)
