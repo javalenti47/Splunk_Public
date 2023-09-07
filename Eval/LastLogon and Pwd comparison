@@ -1,0 +1,13 @@
+Analyzes the time difference from the current date (cDate) to the actual lastLogonTimestamp and pwdLastSet
+
+| eval EmpIDMatch? = if(identity_copy = extensionAttribute3, "YES" , "NO")
+| eval epochDate=strptime(pwdLastSet, "%Y-%m-%dT%H:%M:%S.%QZ")
+| eval cDate=now()
+| eval cFormat=strftime(cDate,"%Y-%m-%dT%H:%M:%S.%QZ")
+| eval DaysDiff = round(((cDate - epochDate)/86400)-1,0)
+| eval newfield = if((DaysDiff > 180) OR (pwdLastSet = "(never)"), "Expired" , "Active")
+| eval epoch_end=strptime(lastLogonTimestamp,"%Y-%m-%dT%H:%M:%S.%QZ")
+| eval "Days since lastlogon" = round(((cDate-epoch_end)/86400)-1,0)
+| rex field=lastLogonTimestamp (?<lastLogonTimestamp>\d{4}-\d{2}-\d+)
+| rex field=pwdLastSet (?<pwdLastSet>\d{4}-\d{2}-\d+)
+| fields - epochDate,cFormat
