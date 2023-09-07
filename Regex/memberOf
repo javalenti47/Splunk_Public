@@ -1,0 +1,5 @@
+Helps extract the memberOf and removes the excess CN data
+
+| rex field=memberOf max_match=0 "CN=(?<memberOf>[^,$]*)"
+| rex field=memberOf max_match=0 "CN=(?<memberOf>[^,$]*)"
+| rex field=memberOf max_match=0 "CN=(?<memberOf>[^,$]*[,]*[^,$]*")
