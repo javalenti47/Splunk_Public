@@ -1,0 +1,3 @@
+Used to eval thick fields with lots of raw text to find whether a unique string exists.  In this case the 'personnelAlias' field is being hunted for whether or not the string 'National Provider Identifier' exists
+
+| eval NPI = if(like(personnelAlias,"%National Provider Identifier%"), "YES", "NO")
