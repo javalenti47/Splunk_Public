@@ -1,0 +1,5 @@
+| rex field=lastLogonTimestamp (?<lastLogonTimestamp>\d{4}-\d{2}-\d+)
+| rex field=whenChanged (?<whenChanged>\d{4}-\d{2}-\d+)
+| rex field=startDate (?<startDate>\d{4}-\d{2}-\d+)
+| rex field=pwdLastSet (?<pwdLastSet>\d{4}-\d{2}-\d+)
+| rex field=endDate (?<endDate >\d{4}-\d{2}-\d+)
