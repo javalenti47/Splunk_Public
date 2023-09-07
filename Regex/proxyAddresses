@@ -1,0 +1,1 @@
+| rex field=proxyAddresses max_match=0 "(?<proxyAddresses>[[:alnum:]]+@[[:alnum:]]+\.[[:alpha:]]+du)"
