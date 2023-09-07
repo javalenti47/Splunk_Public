@@ -1,0 +1,3 @@
+When given the FirstName, LastName, and MiddleInitial - this eval helps join all fields together in one field labeled 'Name'
+
+| eval Name=LastName.", ".FirstName." ".MiddleInitial
