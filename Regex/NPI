@@ -1,0 +1,1 @@
+| rex field=xxpersonnelAliasxx "(?<xxNPIxx>[0-9]+)(#~#type=National Provider Identifier)" 
