@@ -1,0 +1,6 @@
+AD memberOf eval to determine if user is in a specific memberOf group, works not just for O365 but any AD group
+
+| eval O365-1 = if(in(memberOf, "O365-1"), "X" , " ")
+| eval O365-2 = if(in(memberOf, "O365-2"), "X" , " ")
+| eval O365-3 = if(in(memberOf, "O365-3"), "X" , " ")
+| eval O365-4 = if(in(memberOf, "O365-4"), "X" , " ")
