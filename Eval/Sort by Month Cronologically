@@ -1,0 +1,8 @@
+Eval (primarily for dashboards) to sort by the Year-Month, Day fields.  This aids executive filtering, was helpful for O365 licensure analysis
+
+| dedup Username
+| eval "Start_Month_Year"=strftime(strptime(StartDate,"%F"),"%b %Y")
+| eval "Start_Year"=strftime(strptime(StartDate, "%Y-%m-%d"),"%Y")
+| stats count values(Username) by License,StartDate,Start_Month_Year
+| sort by Start_Year,StartDate,License
+| fields - values(Username),Start_Year,StartDate
