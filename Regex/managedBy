@@ -1,0 +1,6 @@
+Extracts the CN data from the managedBy attribute
+
+| rex field=managedBy max_match=0 "CN=(?<managedBy>[^,$]*[,]*[^,OU=]*")  
+| rex field=managedBy max_match=0 "CN=(?<managedBy>[^,$]*[,]*[^,$]*")
+
+| rex field=managedBy max_match=0 "CN=(?<managedBy>[A-Za-z]*[,]*[A-Za-z]*[,]*+")
