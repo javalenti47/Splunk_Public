@@ -1,0 +1,8 @@
+https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/
+
+```can manipulate for a count greater than 50 events (lockouts) to alert on```
+
+index=wineventlog EventCode=4740 user=* NOT Guest user_status=* 
+| dedup user
+| table _time user EventCode signature Group_Domain user_status user_nick host
+| rename Group_Domain as "Locked on" , signature as Event, host as DC
