@@ -1,9 +1,0 @@
-https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/
-
-index=wineventlog EventID=4738 UserWorkstations="*" TargetUserName="INSERT sAMAccountName" SubjectUserName!="ANONYMOUS LOGON" earliest=-7d
-| dedup UserWorkstations
-| makemv delim="," UserWorkstations
-| mvexpand UserWorkstations
-| search NOT UserWorkstations IN ("DEVICE1","DEVICE2","DEVICE3","DEVICE4","...") ```list of workstations to be the consistent 'status quo' of accepted workstations in the NetBIOS```
-| table _time TargetUserName SubjectUserName UserWorkstations
-| rename UserWorkstations as "Workstation Added/Removed"
