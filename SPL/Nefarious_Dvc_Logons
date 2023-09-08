@@ -1,0 +1,17 @@
+https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/
+
+```Use case for monitoring users accessing workstations they should not be - ex for kiosks where the kiosk should be the only sAMAccountName accessing the device```
+
+index=wineventlog sourcetype=XmlWinEventLog EventCode=4624 src="Device Name of monitored computer" earliest=-24h 
+| join src type=outer
+    [search index=summary_ldap_computers distinguishedName="*OU*" earliest=-3h
+    | rename src as WorkstationHacked
+    | rename sAMAccountName as src_user
+    | table src_user src sAMAccountName distinguishedName]
+| search NOT user IN ("*anticipated device*","SYSTEM","LOCAL SERVICE","NETWORK SERVICE","DWM-1","UMFD-1","UMFD-0","DWM-2","UMFD-2","DWM-3","UMFD-3","lenovo*","ANONYMOUS LOGON","IS_Analyst1","IS_Analyst2","IS_Analyst3","IS_Analyst3")
+| dedup src
+| eventstats count values(src) by user
+| table _time sAMAccountName src user EventCode signature count
+| rename src as Workstation, user as Culprit, signature as Action, count as "Successful Logins"
+| fields - EventCode, sAMAccountName, Action
+| sort BY - "Successful Logins"
