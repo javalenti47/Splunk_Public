@@ -1,0 +1,136 @@
+<dashboard version="1.1" theme="dark">
+  <label>O365 Prehire Forecast Clone_test</label>
+  <row>
+    <panel>
+      <title>E5Heavy, F3Deskless Prehire License Projection</title>
+      <chart>
+        <search>
+          <query>| multisearch
+```_```
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND JobFamily IN (
+"JOBCODE1",
+"JOBCODE2".
+) AND EmailRequired=Yes earliest=-24h
+    | eval License = "E5Heavy"]
+```_```    
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+" ",
+" ",
+" ",
+) AND EmailRequired="Yes" earliest=-24h
+    | eval License = "F3Deskless/F3Deskless-NoMail"]
+```_```    
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+"  ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+
+) AND EmailRequired="Yes" earliest=-24h
+    | eval License = "E5Heavy"]
+```_```      
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+" ",
+) AND EmailRequired="No" earliest=-24h
+    | eval License = "F3Deskless/F3Deskless-NoMail"]
+```_```
+| dedup Username
+| eval "Start_Month_Year"=strftime(strptime(StartDate,"%F"),"%b %Y")
+| eval "Start_Year"=strftime(strptime(StartDate, "%Y-%m-%d"),"%Y")
+| eval "Start_Month"=strftime(strptime(StartDate,"%F"),"%B")
+| stats count values(Username) by License,StartDate,Start_Month_Year
+| sort by Start_Year,License
+| fields - values(Username),Start_Year</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">auto</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">large</option>
+        <option name="trellis.splitBy">License</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Prehire Forecast Account Summary</title>
+      <table>
+        <search>
+          <query>| multisearch
+```_```
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND JobFamily IN (
+"JOBCODE1",
+"JOBCODE2".
+) AND EmailRequired=Yes earliest=-24h
+    | eval License = "E5Heavy"]
+```_```    
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+
+) AND EmailRequired="Yes" earliest=-24h
+    | eval License = "F3Deskless/F3Deskless-NoMail"]
+```_```    
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+"  ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+) AND EmailRequired="Yes" earliest=-24h
+    | eval License = "E5Heavy"]
+```_```      
+    [search index=sailpoint_summary Application=InFor RelationshipStatus=PREHIRE AND AssignmentType IN (
+" ",
+" ",
+" ",
+) AND EmailRequired="No" earliest=-24h
+    | eval License = "F3Deskless/F3Deskless-NoMail"]
+```_```
+```_```
+| dedup Username
+| eval StartDate_Month_Year=strftime(strptime(StartDate,"%F"),"%b %Y")
+| stats count values(Username) by License,StartDate,StartDate_Month_Year,RelationshipStatus,AssignmentType,Username,WorkEmail
+| fields - values(Username),count
+| sort by StartDate</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
