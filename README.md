@@ -12,4 +12,6 @@ Public Repo for SPL contains the following information.  These modifiers are fre
          - accounts w/ pwd never to expire
          - groups (all scopes) added or removed
          - Kiosk workstation 'Log On To' audit
+
+   4. Dashboards
      
