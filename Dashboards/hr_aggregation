@@ -1,0 +1,271 @@
+<dashboard version="1.1" theme="dark">
+  <label>Aggregation Status</label>
+  <description>Purpose: Display Previous &amp; Anticipated count of ACTIVE, Limited Scope (LS), PREHIRE, TERMINATED identities from INFORDWHR</description>
+  <row>
+    <panel>
+      <title>ACTIVE</title>
+      <single>
+        <title>Yesterday's Final Count</title>
+        <search>
+          <query>index=InForDB_Summary RelationshipStatus="ACTIVE" earliest=-48h latest=-24h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| dedup RelationshipStatus
+| stats values(CountOf),
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Limited Scope</title>
+      <single>
+        <title>Yesterday's Final Count</title>
+        <search>
+          <query>index=InForDB_Summary RelationshipStatus="Limited Scope" earliest=-48h latest=-24h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| dedup RelationshipStatus
+| stats values(CountOf),
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>PREHIRE</title>
+      <single>
+        <title>Yesterday's Final Count</title>
+        <search>
+          <query>index=InForDB_Summary RelationshipStatus="PREHIRE" earliest=-48h latest=-24h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| dedup RelationshipStatus
+| stats values(CountOf),
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>TERMINATED</title>
+      <single>
+        <title>Yesterday's Final Count</title>
+        <search>
+          <query>index=InForDB_Summary RelationshipStatus="TERMINATED" earliest=-48h latest=-24h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| dedup RelationshipStatus
+| stats values(CountOf),
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>7AM..</title>
+      <chart>
+        <title>Today's 7AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("070*","071*")
+| stats values(CountOf) by Date, RelationshipStatus
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",
+| replace "Limited Scope" with "LS", "TERMINATED" with "TERM"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>730AM..</title>
+      <chart>
+        <title>Today's 730AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("073*","074*")
+| stats values(CountOf) by Date, RelationshipStatus
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count",
+| replace "Limited Scope" with "LS", "TERMINATED" with "TERM"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>8AM..</title>
+      <chart>
+        <title>Today's 8AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| stats values(CountOf) by Date, RelationshipStatus
+| dedup RelationshipStatus
+| sort by Date, RelationshipStatus
+| rename values(CountOf) as "Employee Count"
+| replace "Limited Scope" with "LS", "TERMINATED" with "TERM"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>7AM</title>
+      <table>
+        <title>Today's 7AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("070*","071*")
+| stats values(CountOf) by _time, Time, Date, RelationshipStatus
+| sort by _time, RelationshipStatus
+| rename values(CountOf) as "Employee Count"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <title>730AM</title>
+      <table>
+        <title>Today's 730AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("073*","074*")
+| stats values(CountOf) by _time, Time, Date, RelationshipStatus
+| sort by _time, RelationshipStatus
+| rename values(CountOf) as "Employee Count"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>8AM</title>
+      <table>
+        <title>Today's 8AM count of ACTIVE, LS, PREHIRE, TERM</title>
+        <search>
+          <query>index=InForDB_Summary earliest=-22h
+| eval Time=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Date=strftime(_time,"%I%M %p")
+| search Date IN ("080*","081*","082*","083*","084*")
+| stats values(CountOf) by _time, Time, Date, RelationshipStatus
+| dedup RelationshipStatus
+| sort by _time, RelationshipStatus
+| rename values(CountOf) as "Employee Count"
+| fields - _time, Date</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Status Counts (-7d)</title>
+        <search>
+          <query>index=InForDB_Summary RelationshipStatus=* earliest=-7d
+| eval "Date/Time"=strftime(_time,"%m/%d/%Y %H%M %p")
+| eval Time=strftime(_time,"%I%M %p")
+| eval J="............................................."
+| eval V3="............................................."
+| stats values(CountOf) by RelationshipStatus, Time, "Date/Time", J, V3
+| fields J RelationshipStatus Time "Date/Time" values(CountOf) V3
+| sort by - "Date/Time", RelationshipStatus
+| rename values(CountOf) as "Employee Count"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">16</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <format type="color" field="RelationshipStatus">
+          <colorPalette type="map">{"ACTIVE":#118832,"Limited Scope":#CBA700,"PREHIRE":#1182F3,"TERMINATED":#D41F1F}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+</dashboard>
