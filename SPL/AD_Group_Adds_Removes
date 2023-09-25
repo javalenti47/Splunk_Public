@@ -1,6 +1,6 @@
 ```https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/
 
-All EventCodes for 'a user has been added/removed from a group (4728,4729,4732,4746,4756,4751,4756,4761,4729,4733,4747,4752,4757,4762)```
+All EventCodes for 'a user has been added/removed from a group (4728,4729,4746,4756,4751,4756,4761,4729,4733,4747,4752,4757,4762)```
 
 index=wineventlog EventCode IN (4728,4729) EventData_Xml="*INSERT GROUP*" earliest=-1h ```Global Security Groups```
 | table  _time Domain_Name src_user src_user_nick EventCode signature TargetUserName object
